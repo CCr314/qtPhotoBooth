@@ -9,6 +9,10 @@ QT += printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+INCLUDEPATH += /home/claude/build/cups
+
+LIBS += -lcups
+
 TARGET = qtPhotoBooth
 TEMPLATE = app
 
@@ -31,14 +35,16 @@ SOURCES += \
     commandes.cpp \
     settings.cpp \
     resultat.cpp \
-    params.cpp
+    params.cpp \
+    cups_interface.cpp
 
 HEADERS += \
         mainwindow.h \
     commandes.h \
     settings.h \
     resultat.h \
-    params.h
+    params.h \
+    cups_interface.h
 
 FORMS += \
         mainwindow.ui \

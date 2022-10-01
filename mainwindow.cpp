@@ -25,7 +25,6 @@
 #include "commandes.h"
 #include "resultat.h"
 
-
 #include "params.h"
 
 Q_DECLARE_METATYPE(QCameraInfo)

@@ -44,6 +44,7 @@ public:
     static QString getImagePath();
     static QString getMasquePath();
     static bool isModePreview();
+    static void setModePreview(bool value);
     static int getCompteur();
     static QColor getColorTheme();
     static void setColorTheme(QColor value);

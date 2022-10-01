@@ -82,6 +82,12 @@ QString params::getMasquePath() {return masquePath;}
 
 bool params::isModePreview() {return modePreview;}
 
+void params::setModePreview(bool value)
+{
+    modePreview=value;
+    settings->setValue("modePreview",value);
+}
+
 int params::getCompteur() {return compteur;}
 
 QColor params::getColorTheme() {return colorTheme;}

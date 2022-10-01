@@ -15,6 +15,7 @@ Settings::Settings(QWidget *parent) :
     ui->setupUi(this);
 
 
+    ui->lblCupsStatus->setText(cups.serveurOK()?"Impression : serveur OK":"Impression : serveur KO");
 
     foreach (const QStorageInfo &storage, QStorageInfo::mountedVolumes()) {
         if (storage.isValid() && storage.isReady()) {
@@ -48,8 +49,9 @@ Settings::~Settings()
 void Settings::on_btnImprimante_clicked()
 {
     //
-    QProcess process;
-    process.start("/usr/bin/chromium-browser http://localhost:631");
+    //QProcess process;
+    //process.start("/usr/bin/chromium-browser http://localhost:631");
+    QProcess::execute("/usr/bin/chromium-browser http://localhost:631");
 
     /*
     QPrinter printer;
@@ -68,7 +70,14 @@ void Settings::on_btnRestart_clicked()
 
 void Settings::on_btnColor_clicked()
 {
+
    QColor result = QColorDialog::getColor(params::getColorTheme(), this , "Sélectionnez le thème couleur",QColorDialog::ShowAlphaChannel | QColorDialog::DontUseNativeDialog);
 
     if(result.isValid()) params::setColorTheme(result);
+
+}
+
+void Settings::on_chkPreview_stateChanged(int arg1)
+{
+    params::setModePreview(ui->chkPreview->checkState());
 }

@@ -7,24 +7,17 @@
     <x>0</x>
     <y>0</y>
     <width>473</width>
-    <height>381</height>
+    <height>217</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="4" column="0">
-    <widget class="QPushButton" name="btnRestart">
+   <item row="3" column="0">
+    <widget class="QPushButton" name="btnColor">
      <property name="text">
-      <string>Redémarrer</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QCheckBox" name="checkBox_2">
-     <property name="text">
-      <string>Multi-masques</string>
+      <string>Thème Couleur</string>
      </property>
     </widget>
    </item>
@@ -35,27 +28,44 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
-    <widget class="QPushButton" name="btnColor">
-     <property name="text">
-      <string>Thème Couleur</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QCheckBox" name="chkPreview">
-     <property name="text">
-      <string>Mode Preview</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0">
+   <item row="6" column="0">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QCheckBox" name="checkBox_2">
+     <property name="text">
+      <string>Multi-masques</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QPushButton" name="btnRestart">
+     <property name="text">
+      <string>Redémarrer</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QCheckBox" name="chkPreview">
+     <property name="text">
+      <string>Mode aperçu avant impression</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="lblCupsStatus">
+     <property name="text">
+      <string>Statut impression : CUPS OK</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
