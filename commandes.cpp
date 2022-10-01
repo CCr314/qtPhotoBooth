@@ -111,8 +111,8 @@ void Commandes::mousePressEvent(QMouseEvent *e)
             //settingsDialog.setImageSettings(m_imageSettings);
 
             if (settingsDialog.exec()) {
-                //m_imageSettings = settingsDialog.imageSettings();
-                //m_imageCapture->setEncodingSettings(m_imageSettings);
+                // raffraichi l'image
+                setMode(wait);
             }
         }
 
@@ -122,7 +122,7 @@ void Commandes::mousePressEvent(QMouseEvent *e)
 
 void Commandes::aspectRatio(QLabel *label,QPixmap pixmap)
 {
-    int w = label->width()*.8;   // on ne prend que 0ù de l'écran
+    int w = label->width()*.8;   // on ne prend que 80% de l'écran
     int h = label->height()*.8;
 
     //ui->label->setPixmap(new_image); // showing result

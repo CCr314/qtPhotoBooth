@@ -68,7 +68,7 @@ void Settings::on_btnRestart_clicked()
 
 void Settings::on_btnColor_clicked()
 {
-   QColor result = QColorDialog::getColor(params::getColorTheme(), this , "Sélectionnez le thème couleur",QColorDialog::ShowAlphaChannel);// | QColorDialog::DontUseNativeDialog);
+   QColor result = QColorDialog::getColor(params::getColorTheme(), this , "Sélectionnez le thème couleur",QColorDialog::ShowAlphaChannel | QColorDialog::DontUseNativeDialog);
 
     if(result.isValid()) params::setColorTheme(result);
 }
