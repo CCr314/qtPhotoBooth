@@ -52,50 +52,38 @@ QString cups_interface::imprimateDefaut()
 }
 
 
-bool cups_interface::statutImprimante()
+QString cups_interface::statutImprimante()
 {
     int		i, j;			/* Looping vars */
     ipp_t		*request,		/* IPP Request */
-          *response,		/* IPP Response */
-          *jobs;			/* IPP Get Jobs response */
-    ipp_attribute_t *attr,		/* Current attribute */
-          *jobattr,		/* Job ID attribute */
-          *reasons;		/* Job state reasons attribute */
-    const char	*message,		/* Printer state message */
-          *description,		/* Description of printer */
-          *location,		/* Location of printer */
-          *make_model,		/* Make and model of printer */
-          *uri;			/* URI of printer */
-    ipp_attribute_t *allowed,		/* requesting-user-name-allowed */
-          *denied;		/* requestint-user-name-denied */
-    ipp_pstate_t	pstate;			/* Printer state */
-    cups_ptype_t	ptype;			/* Printer type */
-    time_t	ptime;			/* Printer state time */
-    int		jobid;			/* Job ID of current job */
-    char		printer_uri[HTTP_MAX_URI],
-                      /* Printer URI */
-          printer_state_time[255];/* Printer state time */
-     cups_dest_t **dests;
+          *response;		/* IPP Response */
+    ipp_attribute_t *attr;
+     cups_dest_t *dests;
+    QString message="Prête à imprimer";
+    int code_erreur;
 
-    char * name="Canon_SELPHY_CP1300";
-    static const char *pattrs[] =		/* Attributes we need for printers... */
-          {
-            "printer-name",
-            "printer-state-change-time",
-            "printer-state-message",
-            "printer-is-accepting-jobs"
-          };
+     static const char *pattrs[] =		/* Attributes we need for printers... */
+           {
+             "printer-name",
+             "printer-state",
+             "printer-state-message",
+             "printer-state-reasons",
+             "printer-state-change-time",
+             "printer-type",
+             "printer-info",
+             "printer-location",
+             "printer-make-and-model",
+             "printer-uri-supported",
+             "requesting-user-name-allowed",
+             "requesting-user-name-denied"
+           };
+
+
 
     _cupsSetLocale(nullptr);
+    dests       = NULL;
 
-    char		*pptr,			/* Pointer into printer */
-          printer[1024];		/* Current printer/class name */
-
-    strlcpy(printer, name, sizeof(printer));
-    if ((pptr = strchr(printer, '/')) != NULL)
-      *pptr++ = '\0';
-
-    if ((*dests = cupsGetNamedDest(CUPS_HTTP_DEFAULT, printer, pptr)) == NULL)
+    if ((dests = cupsGetNamedDest(CUPS_HTTP_DEFAULT, nullptr, nullptr)) != nullptr)
     {
           _cups_globals_t *cg = _cupsGlobals();	/* Global data */
           request = ippNewRequest(CUPS_GET_PRINTERS);
@@ -109,23 +97,39 @@ bool cups_interface::statutImprimante()
           if (cupsLastError() == IPP_STATUS_ERROR_BAD_REQUEST ||
               cupsLastError() == IPP_STATUS_ERROR_VERSION_NOT_SUPPORTED)
           {
-             // erreur
-             // _cupsLangPrintf(stderr,
-             //         _("%s: Error - add '/version=1.1' to server name."),
-             //         "lpstat");
-             // ippDelete(response);
-             // return (1);
+
+              message="error - add '/version=1.1' to server name.";
+              return message;
+
           }
           else if (cupsLastError() > IPP_STATUS_OK_CONFLICTING)
           {
-            //_cupsLangPrintf(stderr, "lpstat: %s", cupsLastErrorString());
-            //ippDelete(response);
-            //return (1);
+
+              message = QString::fromLocal8Bit(cupsLastErrorString());
+              return message;
+
           }
+          response = cupsDoRequest(CUPS_HTTP_DEFAULT, request, "/");
           if (response)
           {
+              for (attr = response->attrs; attr != NULL; attr = attr->next)
+              {
 
+                  // TODO comment s'assurer que c'est sur la bonne imprimante ?
+                    if(attr->group_tag == IPP_TAG_PRINTER)
+                    {
+                        if (!strcmp(attr->name, "printer-state-message") &&
+                                     attr->value_tag == IPP_TAG_TEXT)
+                        {
+                              message = QString::fromLocal8Bit(attr->values[0].string.text);
+                              break;
+                        }
+                        if(!strcmp(attr->name, "printer-state") && attr->value_tag==IPP_TAG_ENUM) code_erreur=attr->values[0].integer;
+                    }
+
+            }
           }
     }
 
+    return message;
 }

@@ -11,7 +11,7 @@ public:
 
     bool serveurOK();
     QString imprimateDefaut();
-    bool statutImprimante();
+    QString statutImprimante();
 };
 
 #endif // CUPS_INTERFACE_H
