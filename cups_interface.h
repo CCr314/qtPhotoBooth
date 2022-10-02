@@ -2,6 +2,7 @@
 #define CUPS_INTERFACE_H
 
 #include <cups/cups-private.h>
+#include <QString>
 
 class cups_interface
 {
@@ -9,6 +10,8 @@ public:
     cups_interface();
 
     bool serveurOK();
+    QString imprimateDefaut();
+    bool statutImprimante();
 };
 
 #endif // CUPS_INTERFACE_H

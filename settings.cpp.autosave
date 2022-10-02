@@ -51,16 +51,9 @@ void Settings::on_btnImprimante_clicked()
     //
     //QProcess process;
     //process.start("/usr/bin/chromium-browser http://localhost:631");
-    QProcess::execute("/usr/bin/chromium-browser http://localhost:631");
+    //QProcess::execute("/usr/bin/chromium-browser http://localhost:631");
 
-    /*
-    QPrinter printer;
-    QPrintDialog printDialog(&printer, this);
-    if (printDialog.exec() == QDialog::Accepted) {
-        // print ...
-        qDebug() << printer.printerName() ;
-    }
-    */
+    QProcess::execute("cupsenable Canon_SELPHY_CP1300");
 }
 
 void Settings::on_btnRestart_clicked()
