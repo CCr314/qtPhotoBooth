@@ -28,6 +28,8 @@ private slots:
 
     void on_chkPreview_stateChanged(int arg1);
 
+    void onColorChange(QColor value);
+
 
 
 private:

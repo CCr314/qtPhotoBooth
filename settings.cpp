@@ -66,13 +66,23 @@ void Settings::on_btnRestart_clicked()
 void Settings::on_btnColor_clicked()
 {
 
-   QColor result = QColorDialog::getColor(params::getColorTheme(), this , "Sélectionnez le thème couleur"); //,QColorDialog::ShowAlphaChannel | QColorDialog::DontUseNativeDialog);
+   //QColor result = QColorDialog::getColor(params::getColorTheme(), this , "Sélectionnez le thème couleur"); //,QColorDialog::ShowAlphaChannel | QColorDialog::DontUseNativeDialog);
 
-    if(result.isValid()) params::setColorTheme(result);
+   //if(result.isValid()) params::setColorTheme(result);
+    QColorDialog *dialog = new QColorDialog(this);
+    dialog->setCurrentColor(params::getColorTheme());
+    dialog->open(this,SLOT(onColorChange(QColor)));
 
 }
 
 void Settings::on_chkPreview_stateChanged(int arg1)
 {
     params::setModePreview(ui->chkPreview->checkState());
+}
+
+
+void Settings::onColorChange(QColor value)
+{
+    params::setColorTheme(value);
+
 }
